@@ -6,13 +6,19 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 11:27:24 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/11/27 11:28:24 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:08:30 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
+# include <stdlib.h>
+# include <string.h>
+
 char	*ft_strjoin(char const *s1, char const *s2);
+char	**ft_split(char *s, char c);
+size_t	ft_strlen(const char *s);
+int		ft_strncmp(char *s1, char *s2, unsigned int n);
 
 #endif
