@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 10:14:47 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/11/27 16:33:06 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/11/28 10:50:49 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,25 +70,37 @@ int	find_cmd(char **paths, char *cmd)
 	return (-1);
 }
 
+
+char	*build_path(char *path, char *cmd)
+{
+	char	*new;
+
+	new = "/";
+	new = ft_strjoin(new, cmd);
+	new = ft_strjoin(path, new);
+	return (new);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	char	**paths;
-	//int		*cmd_path;
+	int		*cmd_path;
 	int		i;
 
 	if (ac > 4)
 	{
-		//cmd_path = malloc((ac - 3) * sizeof(int));
+		cmd_path = malloc((ac - 3) * sizeof(int));
 		paths = get_paths(envp);
-		//i = -1;
-		//while (++i < ac - 3)
-		//	cmd_path[i] = find_cmd(paths, av[2 + i]);
 		i = -1;
+		while (++i < ac - 3)
+			cmd_path[0] = find_cmd(paths, get_first_word(av[2 + i]));
+			//printf("%s\n", build_path(paths[find_cmd(paths, get_first_word(av[2 + i]))], get_first_word(av[2 + i])));
+		/*i = -1;
 		printf("file1: %s\nfile2: %s\n", av[1], av[ac - 1]);
 		while (++i < ac - 3)
-			printf("cmd%d: %s\n", i + 1, av[2 + i]);
+			printf("cmd%d: %s\n", i + 1, av[2 + i]);*/
 		free_strs(paths);
-		//free(cmd_path);
+		free(cmd_path);
 	}
 	else
 		write(2, "Error\n", 6);

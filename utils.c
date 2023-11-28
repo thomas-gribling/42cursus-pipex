@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:49:00 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/11/27 15:08:10 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/11/28 09:57:03 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,25 @@ int	ft_strncmp(char *s1, char *s2, unsigned int n)
 	while (s1[i] && s2[i] && s1[i] == s2[i] && i < n - 1)
 		i++;
 	return (s1[i] - s2[i]);
+}
+
+char	*get_first_word(char *str)
+{
+	char	*new;
+	int		i;
+	int		j;
+
+	i = 0;
+	while (str[i] == ' ')
+		i++;
+	j = 0;
+	while (str[j + i] != ' ' && str[j + i])
+		j++;
+	new = malloc(j);
+	if (!new)
+		return (NULL);
+	j = -1;
+	while (str[++j + i] != ' ' && str[j + i])
+		new[j] = str[j + i];
+	return (new);
 }
