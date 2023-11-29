@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 10:14:47 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/11/28 10:50:49 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/11/29 10:29:36 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,17 @@ char	**get_paths(char **envp)
 	return (strs);
 }
 
-void	free_strs(char **strs)
-{
-	int	i;
-
-	i = -1;
-	while (strs[++i])
-		free(strs[i]);
-	free(strs);
-}
-
 int	find_cmd(char **paths, char *cmd)
 {
 	char	*new;
 	char	*curr;
 	int		i;
 
-	new = "/";
-	new = ft_strjoin(new, cmd);
+	new = ft_strjoin("/", cmd, 0);
 	i = -1;
 	while (paths[++i])
 	{
-		curr = ft_strjoin(paths[i], new);
+		curr = ft_strjoin(paths[i], new, 0);
 		if (access(curr, X_OK) >= 0)
 			return (free(new), free(curr), i);
 		free(curr);
@@ -70,37 +59,72 @@ int	find_cmd(char **paths, char *cmd)
 	return (-1);
 }
 
-
 char	*build_path(char *path, char *cmd)
 {
 	char	*new;
 
 	new = "/";
-	new = ft_strjoin(new, cmd);
-	new = ft_strjoin(path, new);
+	new = ft_strjoin(new, cmd, 0);
+	new = ft_strjoin(path, new, 2);
 	return (new);
+}
+
+t_cmd	*get_command(char **paths, char *comm)
+{
+	t_cmd	*cmd;
+	char	**tmp;
+	int		cmd_path;
+	
+	tmp = ft_split(comm, ' ');
+	cmd_path = find_cmd(paths, tmp[0]);
+	if (cmd_path == -1)
+		return (free(tmp), NULL);
+	cmd = malloc(sizeof(t_cmd));
+	cmd->exe = build_path(paths[cmd_path], tmp[0]);
+	cmd->args = tab_dup(tmp, 1);
+	free_strs(tmp);
+	return (cmd);
+}
+
+void	free_cmds(t_cmd **cmd)
+{
+	int	i;
+
+	i = -1;
+	while (cmd[++i])
+	{
+		if (cmd[i]->exe)
+			free(cmd[i]->exe);
+		if (cmd[i]->args)
+			free_strs(cmd[i]->args);
+		free(cmd[i]);
+	}
+	free(cmd);
 }
 
 int	main(int ac, char **av, char **envp)
 {
 	char	**paths;
-	int		*cmd_path;
+	t_cmd	**cmd;
 	int		i;
 
 	if (ac > 4)
 	{
-		cmd_path = malloc((ac - 3) * sizeof(int));
+		cmd = malloc((ac - 3) * sizeof(t_cmd*));
 		paths = get_paths(envp);
 		i = -1;
 		while (++i < ac - 3)
-			cmd_path[0] = find_cmd(paths, get_first_word(av[2 + i]));
-			//printf("%s\n", build_path(paths[find_cmd(paths, get_first_word(av[2 + i]))], get_first_word(av[2 + i])));
-		/*i = -1;
-		printf("file1: %s\nfile2: %s\n", av[1], av[ac - 1]);
-		while (++i < ac - 3)
-			printf("cmd%d: %s\n", i + 1, av[2 + i]);*/
+		{
+			cmd[i] = get_command(paths, av[2 + i]);
+			if (!cmd[i])
+			{
+				write(2, "Error\n", 6);
+				return (free_strs(paths), 1); //free aussi cmd
+			}
+			//printf("[%s] [%s] [%s]\n", cmd[i]->exe, cmd[i]->args[0], cmd[i]->args[1]);
+		}
 		free_strs(paths);
-		free(cmd_path);
+		free_cmds(cmd);
 	}
 	else
 		write(2, "Error\n", 6);

@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:49:00 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/11/28 09:57:03 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/11/29 10:27:23 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2, int do_free)
 {
 	char	*s3;
 	int		i;
@@ -44,6 +44,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	s3[i + j] = '\0';
+	if (do_free == 2)
+		free(s2);
 	return (s3);
 }
 
@@ -59,23 +61,72 @@ int	ft_strncmp(char *s1, char *s2, unsigned int n)
 	return (s1[i] - s2[i]);
 }
 
-char	*get_first_word(char *str)
+char	*ft_strdup(const char *s)
 {
-	char	*new;
 	int		i;
-	int		j;
+	char	*dest;
 
 	i = 0;
-	while (str[i] == ' ')
+	while (s[i])
 		i++;
-	j = 0;
-	while (str[j + i] != ' ' && str[j + i])
-		j++;
-	new = malloc(j);
-	if (!new)
+	dest = malloc(i + 1);
+	if (dest == NULL)
 		return (NULL);
-	j = -1;
-	while (str[++j + i] != ' ' && str[j + i])
-		new[j] = str[j + i];
+	i = 0;
+	while (s[i])
+	{
+		dest[i] = s[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+char	**tab_dup(char **tab, int start)
+{
+	char	**out;
+	int		i;
+	
+	i = start;
+	while (tab[i])
+		i++;
+	out = malloc((i + 1) * sizeof(char *));
+	i = start - 1;
+	while (tab[++i])
+		out[i - start] = ft_strdup(tab[i]);
+	out[i] = '\0';
+	return (out);
+}
+
+int	tab_len(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
+}
+
+char	*get_first_word(char *str)
+{
+	char	**tmp;
+	char	*new;
+
+	tmp = ft_split(str, ' ');
+	if (!tmp)
+		return (NULL);
+	new = ft_strdup(tmp[0]);
+	free_strs(tmp);
 	return (new);
+}
+
+void	free_strs(char **strs)
+{
+	int	i;
+
+	i = -1;
+	while (strs[++i])
+		free(strs[i]);
+	free(strs);
 }

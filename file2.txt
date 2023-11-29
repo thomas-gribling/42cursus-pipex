@@ -1,8 +1,1 @@
-total 44
--rwxr-xr-x 1 tgriblin 2023_perpignan 17368 Nov 27 15:57 a.out
--rw-r--r-- 1 tgriblin 2023_perpignan     7 Nov 27 10:47 file1.txt
--rw-r--r-- 1 tgriblin 2023_perpignan     2 Nov 27 15:17 file2.txt
--rw-r--r-- 1 tgriblin 2023_perpignan  2241 Nov 27 15:07 ft_split.c
--rw-r--r-- 1 tgriblin 2023_perpignan  2102 Nov 27 15:57 pipex.c
--rw-r--r-- 1 tgriblin 2023_perpignan  1146 Nov 27 15:08 pipex.h
--rw-r--r-- 1 tgriblin 2023_perpignan  1508 Nov 27 15:08 utils.c
+15
