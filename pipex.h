@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 11:27:24 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/11/29 10:24:47 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/01 09:58:19 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # include <stdlib.h>
 # include <string.h>
+# include <unistd.h>
+
+# define ERR_FILE 2
+# define ERR_ARG 22
 
 typedef struct s_cmd
 {

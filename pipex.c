@@ -6,19 +6,18 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 10:14:47 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/11/29 10:29:36 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/01 11:06:57 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include <unistd.h>
 #include "pipex.h"
 
-char	**get_paths(char **envp)
+char **get_paths(char **envp)
 {
-	char	**strs;
-	char	*tmp;
-	int		i;
+	char **strs;
+	char *tmp;
+	int i;
 
 	strs = NULL;
 	i = -1;
@@ -40,11 +39,11 @@ char	**get_paths(char **envp)
 	return (strs);
 }
 
-int	find_cmd(char **paths, char *cmd)
+int find_cmd(char **paths, char *cmd)
 {
-	char	*new;
-	char	*curr;
-	int		i;
+	char *new;
+	char *curr;
+	int i;
 
 	new = ft_strjoin("/", cmd, 0);
 	i = -1;
@@ -59,9 +58,9 @@ int	find_cmd(char **paths, char *cmd)
 	return (-1);
 }
 
-char	*build_path(char *path, char *cmd)
+char *build_path(char *path, char *cmd)
 {
-	char	*new;
+	char *new;
 
 	new = "/";
 	new = ft_strjoin(new, cmd, 0);
@@ -69,12 +68,12 @@ char	*build_path(char *path, char *cmd)
 	return (new);
 }
 
-t_cmd	*get_command(char **paths, char *comm)
+t_cmd *get_command(char **paths, char *comm)
 {
-	t_cmd	*cmd;
-	char	**tmp;
-	int		cmd_path;
-	
+	t_cmd *cmd;
+	char **tmp;
+	int cmd_path;
+
 	tmp = ft_split(comm, ' ');
 	cmd_path = find_cmd(paths, tmp[0]);
 	if (cmd_path == -1)
@@ -86,9 +85,9 @@ t_cmd	*get_command(char **paths, char *comm)
 	return (cmd);
 }
 
-void	free_cmds(t_cmd **cmd)
+void free_cmds(t_cmd **cmd)
 {
-	int	i;
+	int i;
 
 	i = -1;
 	while (cmd[++i])
@@ -102,15 +101,41 @@ void	free_cmds(t_cmd **cmd)
 	free(cmd);
 }
 
-int	main(int ac, char **av, char **envp)
+int check_file(char *f1)
+{
+	if (access(f1, W_OK) >= 0)
+		return (1);
+	return (0);
+}
+
+int pipex(t_cmd **cmd, char *f1, char *f2)
+{
+	__pid_t	p;
+	
+	if (!check_file(f1))
+		return (0);
+	//if (access(f2, W_OK) < 0)
+		// create it
+	p = fork();
+	if (p < 0)
+	{
+		perror("fork fail");
+		exit(1);
+	}
+	//if (p == 0)
+		// child
+	return (1);
+}
+
+int main(int ac, char **av, char **envp)
 {
 	char	**paths;
 	t_cmd	**cmd;
-	int		i;
+	int 	i;
 
 	if (ac > 4)
 	{
-		cmd = malloc((ac - 3) * sizeof(t_cmd*));
+		cmd = malloc((ac - 3) * sizeof(t_cmd *));
 		paths = get_paths(envp);
 		i = -1;
 		while (++i < ac - 3)
@@ -118,14 +143,16 @@ int	main(int ac, char **av, char **envp)
 			cmd[i] = get_command(paths, av[2 + i]);
 			if (!cmd[i])
 			{
-				write(2, "Error\n", 6);
-				return (free_strs(paths), 1); //free aussi cmd
+				perror("Error!");
+				return (free_strs(paths), free_cmds(cmd), 1);
 			}
 			//printf("[%s] [%s] [%s]\n", cmd[i]->exe, cmd[i]->args[0], cmd[i]->args[1]);
 		}
+		if (!pipex(cmd, av[1], av[ac - 1]))
+			perror(strerror(ERR_FILE));
 		free_strs(paths);
-		free_cmds(cmd);
+		//free_cmds(cmd);
 	}
 	else
-		write(2, "Error\n", 6);
+		perror("error");
 }

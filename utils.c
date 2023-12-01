@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:49:00 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/11/29 10:27:23 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/01 10:39:49 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ char	*ft_strjoin(char *s1, char *s2, int do_free)
 		j++;
 	}
 	s3[i + j] = '\0';
-	if (do_free == 2)
+	if (do_free == 1 || do_free == 3)
+		free(s1);
+	if (do_free == 2 || do_free == 3)
 		free(s2);
 	return (s3);
 }
@@ -87,14 +89,14 @@ char	**tab_dup(char **tab, int start)
 	char	**out;
 	int		i;
 	
-	i = start;
-	while (tab[i])
+	i = 0;
+	while (tab[start + i])
 		i++;
 	out = malloc((i + 1) * sizeof(char *));
 	i = start - 1;
 	while (tab[++i])
 		out[i - start] = ft_strdup(tab[i]);
-	out[i] = '\0';
+	out[i - start] = NULL;
 	return (out);
 }
 
