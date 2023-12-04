@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 09:02:03 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/04 11:24:37 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/04 14:45:29 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ t_cmd	*get_command(char **paths, char *comm)
 		return (free(tmp), NULL);
 	cmd = malloc(sizeof(t_cmd));
 	cmd->path = build_path(paths[cmd_path], tmp[0]);
-	cmd->argc = tab_len(tmp) - 1;
+	cmd->argc = tab_len(tmp);
 	if (cmd->argc > 0)
-		cmd->args = tab_dup(tmp, 1);
+		cmd->args = tab_dup(tmp, 0);
 	else
-		cmd->args = NULL;
+		cmd_add_arg(cmd, comm);
 	free_strs(tmp);
 	return (cmd);
 }
@@ -76,13 +76,13 @@ void	cmd_add_arg(t_cmd *cmd, char *new)
 	}
 	else
 	{
-		tmp = malloc((tab_len(cmd->args) + 2) * sizeof(char *));
+		tmp = malloc((cmd->argc + 2) * sizeof(char *));
 		i = -1;
 		while (cmd->args[++i])
 			tmp[i] = ft_strdup(cmd->args[i]);
 		tmp[i] = ft_strdup(new);
 		tmp[i + 1] = NULL;
-		free(cmd->args);
+		free_strs(cmd->args);
 		cmd->args = tab_dup(tmp, 0);
 		free_strs(tmp);
 		cmd->argc++;
@@ -109,10 +109,10 @@ void	print_cmd(t_cmd *cmd)
 {
 	int	i;
 
-	i = -1;
+	i = 0;
 	printf("[%s] ", cmd->path);
 	if (cmd->argc)
 		while (cmd->args[++i])
 			printf("[%s] ", cmd->args[i]);
-	printf("- (%d args)\n", cmd->argc);
+	printf("- (%d args)\n", cmd->argc - 1);
 }
