@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 11:27:24 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/01 09:58:19 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/04 09:41:19 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,17 @@
 # define PIPEX_H
 
 # include <stdlib.h>
-# include <string.h>
+# include <strings.h>
 # include <unistd.h>
+# include <stdio.h>
 
 # define ERR_FILE 2
 # define ERR_ARG 22
 
 typedef struct s_cmd
 {
-	char		*exe;
+	char		*path;
+	int			argc;
 	char		**args;
 }				t_cmd;
 
@@ -35,5 +37,11 @@ char	**tab_dup(char **tab, int start);
 int		tab_len(char **tab);
 char	*get_first_word(char *str);
 void	free_strs(char **strs);
+void	ft_puterror(char *str);
+
+t_cmd	*get_command(char **paths, char *comm);
+void	cmd_add_arg(t_cmd *cmd, char *new);
+void	free_cmds(t_cmd **cmd);
+void	print_cmd(t_cmd *cmd);
 
 #endif

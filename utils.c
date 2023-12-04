@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:49:00 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/01 10:39:49 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/04 11:24:50 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	**tab_dup(char **tab, int start)
 {
 	char	**out;
 	int		i;
-	
+
 	i = 0;
 	while (tab[start + i])
 		i++;
@@ -131,4 +131,14 @@ void	free_strs(char **strs)
 	while (strs[++i])
 		free(strs[i]);
 	free(strs);
+}
+
+void	ft_puterror(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		write(2, &str[i], 1);
+	write(2, "\n", 1);
 }
