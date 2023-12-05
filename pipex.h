@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 11:27:24 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/04 14:38:03 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/05 09:01:47 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <strings.h>
 # include <unistd.h>
+# include <fcntl.h>
 # include <stdio.h>
 # include <sys/types.h>
 # include <sys/wait.h>
