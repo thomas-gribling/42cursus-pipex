@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 11:27:24 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/05 09:01:47 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/08 09:25:00 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@ typedef struct s_cmd
 	int			argc;
 	char		**args;
 }				t_cmd;
+
+typedef struct s_pipex
+{
+	int			fd[2];
+	int			pipes[2];
+	__pid_t		p[2];
+	t_cmd		**cmd;
+}				t_pipex;
 
 char	*ft_strjoin(char *s1, char *s2, int do_free);
 char	**ft_split(char *s, char c);
