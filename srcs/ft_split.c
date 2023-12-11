@@ -6,11 +6,11 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 16:35:54 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/04 08:56:40 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/11 08:59:25 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../include/pipex.h"
 
 static char	*ft_substr(char *s, unsigned int start, size_t len)
 {

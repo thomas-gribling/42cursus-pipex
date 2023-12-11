@@ -6,11 +6,11 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 09:02:03 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/08 09:53:13 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/11 08:59:19 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../include/pipex.h"
 
 int	find_cmd(char **paths, char *cmd)
 {
@@ -103,16 +103,4 @@ void	free_cmds(t_cmd **cmd)
 		free(cmd[i]);
 	}
 	free(cmd);
-}
-
-void	print_cmd(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	printf("[%s] ", cmd->path);
-	if (cmd->argc)
-		while (cmd->args[++i])
-			printf("[%s] ", cmd->args[i]);
-	printf("- (%d args)\n", cmd->argc - 1);
 }

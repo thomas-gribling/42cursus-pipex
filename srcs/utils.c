@@ -6,11 +6,11 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:49:00 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/04 11:24:50 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/11 08:59:41 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../include/pipex.h"
 
 size_t	ft_strlen(const char *s)
 {
@@ -84,32 +84,6 @@ char	*ft_strdup(const char *s)
 	return (dest);
 }
 
-char	**tab_dup(char **tab, int start)
-{
-	char	**out;
-	int		i;
-
-	i = 0;
-	while (tab[start + i])
-		i++;
-	out = malloc((i + 1) * sizeof(char *));
-	i = start - 1;
-	while (tab[++i])
-		out[i - start] = ft_strdup(tab[i]);
-	out[i - start] = NULL;
-	return (out);
-}
-
-int	tab_len(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-		i++;
-	return (i);
-}
-
 char	*get_first_word(char *str)
 {
 	char	**tmp;
@@ -121,24 +95,4 @@ char	*get_first_word(char *str)
 	new = ft_strdup(tmp[0]);
 	free_strs(tmp);
 	return (new);
-}
-
-void	free_strs(char **strs)
-{
-	int	i;
-
-	i = -1;
-	while (strs[++i])
-		free(strs[i]);
-	free(strs);
-}
-
-void	ft_puterror(char *str)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-		write(2, &str[i], 1);
-	write(2, "\n", 1);
 }
