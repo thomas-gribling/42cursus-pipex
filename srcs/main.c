@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 08:33:10 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/11 09:02:29 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/11 09:21:11 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@
 
 int	main(int ac, char **av, char **envp)
 {
-	char	**paths;
 	t_pipex	pipex;
+	char	**paths;
 	int		i;
+	int		error;
 
 	if (ac != 5)
 		return (ft_puterror("Invalid number of arguments"), 1);
@@ -45,7 +46,8 @@ int	main(int ac, char **av, char **envp)
 			return (free_strs(paths), free_cmds(pipex.cmd), 1);
 		}
 	}
-	proceed(do_pipex(pipex, av[1], av[ac - 1]));
+	error = proceed(do_pipex(pipex, av[1], av[ac - 1]));
 	free_strs(paths);
 	free_cmds(pipex.cmd);
+	return (error);
 }

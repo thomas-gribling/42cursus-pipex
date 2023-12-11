@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 11:27:24 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/11 09:06:28 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/11 09:18:58 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_puterror(char *str);
 char	**get_paths(char **envp);
 t_cmd	*get_command(char **paths, char *comm);
 int		do_pipex(t_pipex pipex, char *f1, char *f2);
-void	proceed(int out);
+int		proceed(int out);
 void	free_cmds(t_cmd **cmd);
 
 #endif

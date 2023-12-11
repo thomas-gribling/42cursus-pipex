@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 10:14:47 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/11 09:03:36 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/11 09:20:04 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ char	**get_paths(char **envp)
 	return (strs);
 }
 
-void	proceed(int out)
+int	proceed(int out)
 {
+	if (out == 1)
+		return (0);
 	if (out == 0)
 		ft_puterror("Error");
 	if (out == -1)
@@ -48,6 +50,7 @@ void	proceed(int out)
 		ft_puterror("Unable to open files");
 	if (out == -3)
 		ft_puterror("Pipe error");
+	return (1);
 }
 
 void	dclose(int *fds1, int *fds2)
