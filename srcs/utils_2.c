@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 08:45:47 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/11 08:59:36 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/11 15:17:19 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,10 @@ void	ft_puterror(char *str)
 	while (str[++i])
 		write(2, &str[i], 1);
 	write(2, "\n", 1);
+}
+
+void	ft_initerror(char *str)
+{
+	ft_puterror(str);
+	exit(1);
 }

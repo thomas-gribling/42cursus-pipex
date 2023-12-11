@@ -6,11 +6,21 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 09:02:03 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/11 09:06:08 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/11 15:39:55 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
+
+char	*build_path(char *path, char *cmd)
+{
+	char	*new;
+
+	new = "/";
+	new = ft_strjoin(new, cmd, 0);
+	new = ft_strjoin(path, new, 2);
+	return (new);
+}
 
 int	find_cmd(char **paths, char *cmd)
 {
@@ -29,16 +39,6 @@ int	find_cmd(char **paths, char *cmd)
 	}
 	free(new);
 	return (-1);
-}
-
-char	*build_path(char *path, char *cmd)
-{
-	char	*new;
-
-	new = "/";
-	new = ft_strjoin(new, cmd, 0);
-	new = ft_strjoin(path, new, 2);
-	return (new);
 }
 
 void	cmd_add_arg(t_cmd *cmd, char *new)

@@ -6,8 +6,7 @@ INCLUDE = include/
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-FILES = main.c \
-		pipex.c \
+FILES = pipex.c \
 		ft_split.c \
 		utils.c \
 		utils_2.c \

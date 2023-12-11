@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 11:27:24 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/11 09:18:58 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/11 16:47:21 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ typedef struct s_cmd
 
 typedef struct s_pipex
 {
-	int			fd[2];
 	int			pipes[2];
-	__pid_t		p[2];
 	t_cmd		**cmd;
 }				t_pipex;
 
@@ -49,11 +47,10 @@ int		tab_len(char **tab);
 char	*get_first_word(char *str);
 void	free_strs(char **strs);
 void	ft_puterror(char *str);
+void	ft_initerror(char *str);
 
 char	**get_paths(char **envp);
 t_cmd	*get_command(char **paths, char *comm);
-int		do_pipex(t_pipex pipex, char *f1, char *f2);
-int		proceed(int out);
 void	free_cmds(t_cmd **cmd);
 
 #endif
