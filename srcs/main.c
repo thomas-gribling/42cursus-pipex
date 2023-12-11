@@ -6,13 +6,13 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 08:33:10 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/11 08:59:29 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/11 09:02:29 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-void	print_cmd(t_cmd *cmd)
+/*void	print_cmd(t_cmd *cmd)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ void	print_cmd(t_cmd *cmd)
 		while (cmd->args[++i])
 			printf("[%s] ", cmd->args[i]);
 	printf("- (%d args)\n", cmd->argc - 1);
-}
+}*/
 
 int	main(int ac, char **av, char **envp)
 {
@@ -44,7 +44,6 @@ int	main(int ac, char **av, char **envp)
 			ft_puterror("Command not found");
 			return (free_strs(paths), free_cmds(pipex.cmd), 1);
 		}
-		//print_cmd(pipex.cmd[i]); // TEMPORARY
 	}
 	proceed(do_pipex(pipex, av[1], av[ac - 1]));
 	free_strs(paths);

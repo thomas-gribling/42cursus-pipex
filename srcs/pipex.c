@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 10:14:47 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/11 08:59:32 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/11 09:03:36 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,16 @@ char	**get_paths(char **envp)
 	return (strs);
 }
 
-int	do_pipe(t_pipex pipex, int id)
+void	proceed(int out)
 {
-	dup2(pipex.pipes[1 - id], 1 - id);
-	close(pipex.pipes[id]);
-	dup2(pipex.fd[id], id);
-	execve(pipex.cmd[id]->path, pipex.cmd[id]->args, NULL);
-	return (1);
-}
-
-int	check_file(char *f1)
-{
-	if (access(f1, W_OK) >= 0)
-		return (1);
-	return (0);
+	if (out == 0)
+		ft_puterror("Error");
+	if (out == -1)
+		ft_puterror("No such file or directory");
+	if (out == -2)
+		ft_puterror("Unable to open files");
+	if (out == -3)
+		ft_puterror("Pipe error");
 }
 
 void	dclose(int *fds1, int *fds2)
@@ -65,9 +61,18 @@ void	dclose(int *fds1, int *fds2)
 	}
 }
 
+int	do_pipe(t_pipex pipex, int id)
+{
+	dup2(pipex.pipes[1 - id], 1 - id);
+	close(pipex.pipes[id]);
+	dup2(pipex.fd[id], id);
+	execve(pipex.cmd[id]->path, pipex.cmd[id]->args, NULL);
+	return (1);
+}
+
 int	do_pipex(t_pipex pipex, char *f1, char *f2)
 {
-	if (!check_file(f1))
+	if (access(f1, W_OK) < 0)
 		return (-1);
 	pipex.fd[0] = open(f1, O_RDONLY);
 	pipex.fd[1] = open(f2, O_CREAT | O_TRUNC | O_WRONLY, 0000644);
@@ -88,16 +93,4 @@ int	do_pipex(t_pipex pipex, char *f1, char *f2)
 	waitpid(pipex.p[0], NULL, 0);
 	waitpid(pipex.p[1], NULL, 0);
 	return (1);
-}
-
-void	proceed(int out)
-{
-	if (out == 0)
-		ft_puterror("Error");
-	if (out == -1)
-		ft_puterror("No such file or directory");
-	if (out == -2)
-		ft_puterror("Unable to open files");
-	if (out == -3)
-		ft_puterror("Pipe error");
 }

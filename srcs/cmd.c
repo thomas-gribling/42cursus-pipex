@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 09:02:03 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/11 08:59:19 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/11 09:06:08 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,27 +41,6 @@ char	*build_path(char *path, char *cmd)
 	return (new);
 }
 
-t_cmd	*get_command(char **paths, char *comm)
-{
-	t_cmd	*cmd;
-	char	**tmp;
-	int		cmd_path;
-
-	tmp = ft_split(comm, ' ');
-	cmd_path = find_cmd(paths, tmp[0]);
-	if (cmd_path == -1)
-		return (free(tmp), NULL);
-	cmd = malloc(sizeof(t_cmd));
-	cmd->path = build_path(paths[cmd_path], tmp[0]);
-	cmd->argc = tab_len(tmp);
-	if (cmd->argc > 0)
-		cmd->args = tab_dup(tmp, 0);
-	else
-		cmd_add_arg(cmd, comm);
-	free_strs(tmp);
-	return (cmd);
-}
-
 void	cmd_add_arg(t_cmd *cmd, char *new)
 {
 	char	**tmp;
@@ -87,6 +66,27 @@ void	cmd_add_arg(t_cmd *cmd, char *new)
 		free_strs(tmp);
 		cmd->argc++;
 	}
+}
+
+t_cmd	*get_command(char **paths, char *comm)
+{
+	t_cmd	*cmd;
+	char	**tmp;
+	int		cmd_path;
+
+	tmp = ft_split(comm, ' ');
+	cmd_path = find_cmd(paths, tmp[0]);
+	if (cmd_path == -1)
+		return (free(tmp), NULL);
+	cmd = malloc(sizeof(t_cmd));
+	cmd->path = build_path(paths[cmd_path], tmp[0]);
+	cmd->argc = tab_len(tmp);
+	if (cmd->argc > 0)
+		cmd->args = tab_dup(tmp, 0);
+	else
+		cmd_add_arg(cmd, comm);
+	free_strs(tmp);
+	return (cmd);
 }
 
 void	free_cmds(t_cmd **cmd)
