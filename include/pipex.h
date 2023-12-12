@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 11:27:24 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/11 16:47:21 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:02:46 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ char	**tab_dup(char **tab, int start);
 int		tab_len(char **tab);
 char	*get_first_word(char *str);
 void	free_strs(char **strs);
-void	ft_puterror(char *str);
 void	ft_initerror(char *str);
 
 char	**get_paths(char **envp);

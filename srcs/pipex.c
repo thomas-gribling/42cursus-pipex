@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 10:14:47 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/11 17:15:33 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/12 16:33:05 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,15 @@ void	child(t_pipex pipex, char **av, char **envp)
 
 	paths = get_paths(envp);
 	cmd = get_command(paths, av[2]);
+	free_strs(paths);
 	if (!cmd)
 		ft_initerror("Command not found");
-	free_strs(paths);
 	fd = open(av[1], O_RDONLY);
 	dup2(fd, 0);
 	dup2(pipex.pipes[1], 1);
 	close(pipex.pipes[0]);
-	execve(cmd->path, cmd->args, envp);
+	if (execve(cmd->path, cmd->args, envp) != 0)
+		ft_initerror("Command error");
 }
 
 void	parent(t_pipex pipex, char **av, char **envp)
@@ -76,31 +77,37 @@ void	parent(t_pipex pipex, char **av, char **envp)
 
 	paths = get_paths(envp);
 	cmd = get_command(paths, av[3]);
+	free_strs(paths);
 	if (!cmd)
 		ft_initerror("Command not found");
-	free_strs(paths);
 	fd = open(av[4], O_CREAT | O_TRUNC | O_WRONLY, 0000644);
 	dup2(fd, 1);
 	dup2(pipex.pipes[0], 0);
 	close(pipex.pipes[1]);
-	execve(cmd->path, cmd->args, envp);
+	if (execve(cmd->path, cmd->args, envp) != 0)
+		ft_initerror("Command error");
 }
 
 int	main(int ac, char **av, char **envp)
 {
 	t_pipex	pipex;
-	__pid_t	p;
+	__pid_t	p[2];
 
 	if (ac != 5)
 		ft_initerror("Args error");
-	if (access(av[1], W_OK) < 0)
+	if (access(av[1], R_OK) < 0)
 		ft_initerror("No such file or directory");
 	if (pipe(pipex.pipes) < 0)
-		ft_initerror("Args error");
-	p = fork();
-	if (p < 0)
 		ft_initerror("Pipe error");
-	if (p == 0)
+	p[0] = fork();
+	if (p[0] < 0)
+		ft_initerror("PID error");
+	if (p[0] == 0)
 		child(pipex, av, envp);
-	parent(pipex, av, envp);
+	p[1] = fork();
+	if (p[1] < 0)
+		ft_initerror("PID error");
+	if (p[1] == 0)
+		parent(pipex, av, envp);
+	return (0);
 }
