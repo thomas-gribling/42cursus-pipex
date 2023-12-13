@@ -6,23 +6,19 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 11:27:24 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/12 15:02:46 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:40:38 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
+# include <fcntl.h>
 # include <stdlib.h>
 # include <strings.h>
 # include <unistd.h>
-# include <fcntl.h>
-# include <stdio.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-
-# define ERR_FILE 2
-# define ERR_ARG 22
 
 typedef struct s_cmd
 {
@@ -31,25 +27,17 @@ typedef struct s_cmd
 	char		**args;
 }				t_cmd;
 
-typedef struct s_pipex
-{
-	int			pipes[2];
-	t_cmd		**cmd;
-}				t_pipex;
-
-char	*ft_strjoin(char *s1, char *s2, int do_free);
+// Core functions
+t_cmd	*cmd_get(char **paths, char *comm);
+// Utils functions
 char	**ft_split(char *s, char c);
+char	*ft_strjoin(char *s1, char *s2, int do_free);
 size_t	ft_strlen(const char *s);
 int		ft_strncmp(char *s1, char *s2, unsigned int n);
 char	*ft_strdup(const char *s);
+void	ft_initerror(char *str);
 char	**tab_dup(char **tab, int start);
 int		tab_len(char **tab);
-char	*get_first_word(char *str);
-void	free_strs(char **strs);
-void	ft_initerror(char *str);
-
-char	**get_paths(char **envp);
-t_cmd	*get_command(char **paths, char *comm);
-void	free_cmds(t_cmd **cmd);
+void	tab_free(char **strs);
 
 #endif

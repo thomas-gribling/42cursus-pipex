@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:49:00 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/11 08:59:41 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:39:10 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,13 @@ char	*ft_strdup(const char *s)
 	return (dest);
 }
 
-char	*get_first_word(char *str)
+void	ft_initerror(char *str)
 {
-	char	**tmp;
-	char	*new;
+	int	i;
 
-	tmp = ft_split(str, ' ');
-	if (!tmp)
-		return (NULL);
-	new = ft_strdup(tmp[0]);
-	free_strs(tmp);
-	return (new);
+	i = -1;
+	while (str[++i])
+		write(2, &str[i], 1);
+	write(2, "\n", 1);
+	exit(1);
 }

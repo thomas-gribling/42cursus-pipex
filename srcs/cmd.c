@@ -6,13 +6,13 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 09:02:03 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/11 15:39:55 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:37:17 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-char	*build_path(char *path, char *cmd)
+static char	*cmd_build(char *path, char *cmd)
 {
 	char	*new;
 
@@ -22,7 +22,7 @@ char	*build_path(char *path, char *cmd)
 	return (new);
 }
 
-int	find_cmd(char **paths, char *cmd)
+static int	cmd_find(char **paths, char *cmd)
 {
 	char	*new;
 	char	*curr;
@@ -41,7 +41,7 @@ int	find_cmd(char **paths, char *cmd)
 	return (-1);
 }
 
-void	cmd_add_arg(t_cmd *cmd, char *new)
+static void	cmd_add_arg(t_cmd *cmd, char *new)
 {
 	char	**tmp;
 	int		i;
@@ -61,46 +61,30 @@ void	cmd_add_arg(t_cmd *cmd, char *new)
 			tmp[i] = ft_strdup(cmd->args[i]);
 		tmp[i] = ft_strdup(new);
 		tmp[i + 1] = NULL;
-		free_strs(cmd->args);
+		tab_free(cmd->args);
 		cmd->args = tab_dup(tmp, 0);
-		free_strs(tmp);
+		tab_free(tmp);
 		cmd->argc++;
 	}
 }
 
-t_cmd	*get_command(char **paths, char *comm)
+t_cmd	*cmd_get(char **paths, char *comm)
 {
 	t_cmd	*cmd;
 	char	**tmp;
 	int		cmd_path;
 
 	tmp = ft_split(comm, ' ');
-	cmd_path = find_cmd(paths, tmp[0]);
+	cmd_path = cmd_find(paths, tmp[0]);
 	if (cmd_path == -1)
-		return (free(tmp), NULL);
+		return (tab_free(tmp), NULL);
 	cmd = malloc(sizeof(t_cmd));
-	cmd->path = build_path(paths[cmd_path], tmp[0]);
+	cmd->path = cmd_build(paths[cmd_path], tmp[0]);
 	cmd->argc = tab_len(tmp);
 	if (cmd->argc > 0)
 		cmd->args = tab_dup(tmp, 0);
 	else
 		cmd_add_arg(cmd, comm);
-	free_strs(tmp);
+	tab_free(tmp);
 	return (cmd);
-}
-
-void	free_cmds(t_cmd **cmd)
-{
-	int	i;
-
-	i = -1;
-	while (cmd[++i])
-	{
-		if (cmd[i]->path)
-			free(cmd[i]->path);
-		if (cmd[i]->argc > 0)
-			free_strs(cmd[i]->args);
-		free(cmd[i]);
-	}
-	free(cmd);
 }

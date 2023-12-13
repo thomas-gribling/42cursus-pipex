@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 08:45:47 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/12 15:02:28 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:39:06 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	tab_len(char **tab)
 	return (i);
 }
 
-void	free_strs(char **strs)
+void	tab_free(char **strs)
 {
 	int	i;
 
@@ -46,15 +46,4 @@ void	free_strs(char **strs)
 	while (strs[++i])
 		free(strs[i]);
 	free(strs);
-}
-
-void	ft_initerror(char *str)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-		write(2, &str[i], 1);
-	write(2, "\n", 1);
-	exit(1);
 }
