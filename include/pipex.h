@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 11:27:24 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/13 16:40:38 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/14 08:33:56 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ size_t	ft_strlen(const char *s);
 int		ft_strncmp(char *s1, char *s2, unsigned int n);
 char	*ft_strdup(const char *s);
 void	ft_initerror(char *str);
+void	ft_initferror(char *str, char *s);
 char	**tab_dup(char **tab, int start);
 int		tab_len(char **tab);
 void	tab_free(char **strs);

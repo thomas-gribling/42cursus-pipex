@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:49:00 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/13 16:39:10 by tgriblin         ###   ########.fr       */
+/*   Updated: 2023/12/14 08:46:48 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,4 @@ char	*ft_strdup(const char *s)
 	}
 	dest[i] = '\0';
 	return (dest);
-}
-
-void	ft_initerror(char *str)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-		write(2, &str[i], 1);
-	write(2, "\n", 1);
-	exit(1);
 }

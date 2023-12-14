@@ -7,10 +7,11 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
 FILES = pipex.c \
+		cmd.c \
 		ft_split.c \
 		utils.c \
-		utils_2.c \
-		cmd.c
+		utils_tab.c \
+		utils_error.c
 FILES_PREFIX = $(addprefix $(SRCS), $(FILES))
 
 OBJECTS = $(FILES:.c=.o)
