@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:32:03 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/01/18 11:21:52 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/01/18 15:04:51 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,13 @@ int	main(int ac, char **av, char **envp)
 {
 	if (ac < 5)
 		ft_initerror("pipex: arguments error");
-	else if (!ft_strncmp(av[1], "here_doc", 8) && ac == 6)
-		ft_initerror("TODO HERE_DOC");
+	if (!ft_strcmp(av[1], "here_doc"))
+	{
+		if (ac < 6)
+			ft_initerror("pipex: arguments error");
+		else
+			ft_initerror("pipex: TODO HERE_DOC");
+	}
 	else
 		do_pipex(ac, av, envp);
 }

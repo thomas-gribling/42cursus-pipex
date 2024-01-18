@@ -1,34 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.h                                      :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/18 08:44:49 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/01/18 15:05:04 by tgriblin         ###   ########.fr       */
+/*   Created: 2024/01/18 13:25:08 by tgriblin          #+#    #+#             */
+/*   Updated: 2024/01/18 13:26:35 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_BONUS_H
-# define PIPEX_BONUS_H
+#include "../include/pipex.h"
 
-# include "pipex.h"
-# include <stdio.h>
-
-typedef struct s_pipex
+void	ft_putstr_fd(char *s, int fd)
 {
-	int			cmd_amt;
-	int			**pipe;
-	int			pipe_here_doc[2];
-	pid_t		p;
-	int			here_d;
-}				t_pipex;
+	int	i;
 
-void	do_pipex(int ac, char **av, char **envp);
-char	**get_paths(char **envp);
-
-int		ft_strcmp(char *s1, char *s2);
-void	ft_putstr_fd(char *s, int fd);
-
-#endif
+	i = -1;
+	while (s[++i])
+		write(fd, &s[i], 1);
+}

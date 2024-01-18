@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 08:43:45 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/01/18 11:38:26 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/01/18 14:38:48 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void	do_pipex(int ac, char **av, char **envp)
 	px = malloc(sizeof(t_pipex));
 	px->cmd_amt = ac - 3;
 	px->pipe = malloc((px->cmd_amt - 1) * sizeof(int *));
+	px->here_d = 0;
 	i = -1;
 	while (++i < px->cmd_amt - 1)
 	{

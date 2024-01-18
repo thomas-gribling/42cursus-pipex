@@ -11,7 +11,8 @@ FILES = pipex.c cmd.c ft_split.c \
 OBJECTS = $(addprefix $(SRCS), $(FILES:.c=.o))
 
 FILES_BONUS = main_bonus.c pipex_bonus.c cmd.c ft_split.c \
-				utils.c utils_tab.c utils_error.c
+				utils.c utils_tab.c utils_error.c utils_bonus.c \
+				gnl/gnl.c gnl/gnl_utils.c
 OBJECTS_BONUS = $(addprefix $(SRCS), $(FILES_BONUS:.c=.o))
 
 %.o: %.c

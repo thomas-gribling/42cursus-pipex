@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 08:49:00 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/14 08:46:48 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/01/18 13:20:10 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,16 @@ char	*ft_strjoin(char *s1, char *s2, int do_free)
 	if (do_free == 2 || do_free == 3)
 		free(s2);
 	return (s3);
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
 }
 
 int	ft_strncmp(char *s1, char *s2, unsigned int n)
