@@ -6,29 +6,26 @@ INCLUDE = include/
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-FILES = pipex.c cmd.c ft_split.c \
-		utils.c utils_tab.c utils_error.c
-OBJECTS = $(addprefix $(SRCS), $(FILES:.c=.o))
+FILES = pipex.c \
+		cmd.c \
+		ft_split.c \
+		utils.c \
+		utils_tab.c \
+		utils_error.c
+FILES_PREFIX = $(addprefix $(SRCS), $(FILES))
 
-FILES_BONUS = main_bonus.c pipex_bonus.c cmd.c ft_split.c \
-				utils.c utils_tab.c utils_error.c utils_bonus.c \
-				gnl/gnl.c gnl/gnl_utils.c
-OBJECTS_BONUS = $(addprefix $(SRCS), $(FILES_BONUS:.c=.o))
-
-%.o: %.c
-	@echo $@
-	@$(CC) $(CFLAGS) -c $< -o $@ -I $(INCLUDE)
+OBJECTS = $(FILES:.c=.o)
+OBJECTS_PREFIX = $(addprefix $(SRCS), $(OBJECTS))
 
 all: $(NAME)
 
-$(NAME): $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $@ -I $(INCLUDE)
-
-bonus: $(OBJECTS_BONUS)
-	$(CC) $(CFLAGS) $(OBJECTS_BONUS) -o $(NAME) -I $(INCLUDE)
+$(NAME):
+	$(CC) $(CFLAGS) -c $(FILES_PREFIX)
+	mv $(OBJECTS) $(SRCS)
+	$(CC) $(CFLAGS) $(OBJECTS_PREFIX) -o $@ -I $(INCLUDE)
 
 clean:
-	rm -rf $(OBJECTS) $(OBJECTS_BONUS)
+	rm -rf $(OBJECTS_PREFIX)
 
 fclean: clean
 	rm -rf $(NAME)
