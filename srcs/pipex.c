@@ -6,7 +6,7 @@
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 10:14:47 by tgriblin          #+#    #+#             */
-/*   Updated: 2023/12/14 08:58:53 by tgriblin         ###   ########.fr       */
+/*   Updated: 2024/01/21 20:10:08 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	parent(int *pipes, char **av, char **envp)
 	char	**paths;
 	int		fd;
 
-	fd = open(av[4], O_CREAT | O_TRUNC | O_WRONLY, 0000644);
+	fd = open(av[4], O_CREAT | O_TRUNC | O_WRONLY, 0664);
 	if (fd < 0)
 		ft_initferror("pipex: permission denied: %s", av[4]);
 	dup2(fd, 1);

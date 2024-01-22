@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   gnl_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgriblin <tgriblin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 08:49:00 by tgriblin          #+#    #+#             */
-/*   Updated: 2024/01/19 21:17:17 by tgriblin         ###   ########.fr       */
+/*   Created: 2023/10/20 09:44:01 by tgriblin          #+#    #+#             */
+/*   Updated: 2024/01/18 13:40:29 by tgriblin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "../../include/gnl.h"
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strjoin(char *s1, char *s2, int do_free)
+char	*ft_strjoin_bis(char *s1, char *s2)
 {
 	char	*s3;
 	int		i;
@@ -44,42 +34,32 @@ char	*ft_strjoin(char *s1, char *s2, int do_free)
 		j++;
 	}
 	s3[i + j] = '\0';
-	if (do_free == 1 || do_free == 3)
+	if (s1)
 		free(s1);
-	if (do_free == 2 || do_free == 3)
-		free(s2);
 	return (s3);
 }
 
-int	ft_strncmp(char *s1, char *s2, unsigned int n)
+void	*free_null(void *ptr1, void *ptr2)
 {
-	unsigned int	i;
-
-	i = 0;
-	if (n == 0)
-		return (0);
-	while (s1[i] && s2[i] && s1[i] == s2[i] && i < n - 1)
-		i++;
-	return (s1[i] - s2[i]);
+	if (ptr1)
+		free(ptr1);
+	if (ptr2)
+		free(ptr2);
+	return (NULL);
 }
 
-char	*ft_strdup(const char *s)
+char	*ft_strchr(const char *s, int c)
 {
 	int		i;
-	char	*dest;
+	char	ch;
+	char	*str;
 
 	i = 0;
-	while (s[i])
+	str = (char *)s;
+	ch = (char)c;
+	while (str[i] != ch && str[i])
 		i++;
-	dest = malloc(i + 1);
-	if (dest == NULL)
+	if (str[i] == '\0' && ch != '\0')
 		return (NULL);
-	i = 0;
-	while (s[i])
-	{
-		dest[i] = s[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
+	return (str + i);
 }
